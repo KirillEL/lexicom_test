@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "task-1"
+version = "0.1.0"
+description = ""
+authors = ["elert.2020 <elert.2020@corp.nstu.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.112.0"
+loguru = "^0.7.2"
+redis = "^5.0.8"
+uvicorn = "^0.30.5"
+pydantic-settings = "^2.4.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

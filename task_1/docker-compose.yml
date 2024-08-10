@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  fastapi:
+    container_name: fastapi_container
+    build:
+      context: .
+      dockerfile: .docker/api/Dockerfile
+    ports:
+      - "8100:8000"
+    volumes:
+      - ".:/home"
+    restart: on-failure
+    depends_on:
+      - redis
+    networks:
+      - base
+
+
+  redis:
+    container_name: redis_container
+    image: redis:latest
+    ports:
+      - "7100:6379"
+    hostname: redis_host
+    networks:
+      - base
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_USER=${REDIS_USER}
+      - REDIS_USER_PASSWORD=${REDIS_USER_PASSWORD}
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "redis-cli", "-a", "$REDIS_PASSWORD", "ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    tty: true
+    stdin_open: true
+    volumes:
+      - "./redisdata:/data"
+
+
+networks:
+  base:
+    driver: bridge
