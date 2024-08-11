@@ -29,7 +29,7 @@ services:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
       - REDIS_USER=${REDIS_USER}
       - REDIS_USER_PASSWORD=${REDIS_USER_PASSWORD}
-    restart: unless-stopped
+    restart: always
     healthcheck:
       test: [ "CMD", "redis-cli", "-a", "$REDIS_PASSWORD", "ping" ]
       interval: 30s
@@ -38,9 +38,13 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - "./redisdata:/data"
+      - "redis-volume:/data"
 
 
 networks:
   base:
     driver: bridge
+
+
+volumes:
+  redis-volume:
