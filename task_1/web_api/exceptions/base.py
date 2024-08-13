@@ -16,8 +16,8 @@ class CustomException(Exception):
 class ExceptionResponseSchema(BaseModel):
     error: str
 
+
 class NotFoundException(CustomException):
     code = HTTPStatus.NOT_FOUND
     error_code = HTTPStatus.NOT_FOUND
     message = HTTPStatus.NOT_FOUND.description
-
